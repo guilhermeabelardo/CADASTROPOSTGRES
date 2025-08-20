@@ -1,11 +1,3 @@
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 17.5
--- Dumped by pg_dump version 17.5
-
--- Started on 2025-08-19 21:54:48
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -19,10 +11,7 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
---
--- TOC entry 221 (class 1255 OID 16408)
--- Name: registrar_log(); Type: FUNCTION; Schema: public; Owner: postgres
---
+
 
 CREATE FUNCTION public.registrar_log() RETURNS trigger
     LANGUAGE plpgsql
@@ -46,10 +35,7 @@ SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
---
--- TOC entry 218 (class 1259 OID 16390)
--- Name: cadastro; Type: TABLE; Schema: public; Owner: postgres
---
+
 
 CREATE TABLE public.cadastro (
     id integer NOT NULL,
@@ -60,11 +46,6 @@ CREATE TABLE public.cadastro (
 
 
 ALTER TABLE public.cadastro OWNER TO postgres;
-
---
--- TOC entry 217 (class 1259 OID 16389)
--- Name: cadastro_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
 
 CREATE SEQUENCE public.cadastro_id_seq
     AS integer
@@ -77,19 +58,10 @@ CREATE SEQUENCE public.cadastro_id_seq
 
 ALTER SEQUENCE public.cadastro_id_seq OWNER TO postgres;
 
---
--- TOC entry 4914 (class 0 OID 0)
--- Dependencies: 217
--- Name: cadastro_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
 
 ALTER SEQUENCE public.cadastro_id_seq OWNED BY public.cadastro.id;
 
 
---
--- TOC entry 220 (class 1259 OID 16400)
--- Name: log_operacoes; Type: TABLE; Schema: public; Owner: postgres
---
 
 CREATE TABLE public.log_operacoes (
     id integer NOT NULL,
@@ -101,10 +73,7 @@ CREATE TABLE public.log_operacoes (
 
 ALTER TABLE public.log_operacoes OWNER TO postgres;
 
---
--- TOC entry 219 (class 1259 OID 16399)
--- Name: log_operacoes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
+
 
 CREATE SEQUENCE public.log_operacoes_id_seq
     AS integer
@@ -117,46 +86,24 @@ CREATE SEQUENCE public.log_operacoes_id_seq
 
 ALTER SEQUENCE public.log_operacoes_id_seq OWNER TO postgres;
 
---
--- TOC entry 4915 (class 0 OID 0)
--- Dependencies: 219
--- Name: log_operacoes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
 
 ALTER SEQUENCE public.log_operacoes_id_seq OWNED BY public.log_operacoes.id;
 
 
---
--- TOC entry 4748 (class 2604 OID 16393)
--- Name: cadastro id; Type: DEFAULT; Schema: public; Owner: postgres
---
 
 ALTER TABLE ONLY public.cadastro ALTER COLUMN id SET DEFAULT nextval('public.cadastro_id_seq'::regclass);
 
 
---
--- TOC entry 4749 (class 2604 OID 16403)
--- Name: log_operacoes id; Type: DEFAULT; Schema: public; Owner: postgres
---
 
 ALTER TABLE ONLY public.log_operacoes ALTER COLUMN id SET DEFAULT nextval('public.log_operacoes_id_seq'::regclass);
 
 
---
--- TOC entry 4906 (class 0 OID 16390)
--- Dependencies: 218
--- Data for Name: cadastro; Type: TABLE DATA; Schema: public; Owner: postgres
---
 
 COPY public.cadastro (id, campo_texto, campo_numerico) FROM stdin;
 \.
 
 
---
--- TOC entry 4908 (class 0 OID 16400)
--- Dependencies: 220
--- Data for Name: log_operacoes; Type: TABLE DATA; Schema: public; Owner: postgres
---
+
 
 COPY public.log_operacoes (id, data_hora, tipo_operacao) FROM stdin;
 1	2025-08-14 00:53:11.159308	INSERT
@@ -170,62 +117,33 @@ COPY public.log_operacoes (id, data_hora, tipo_operacao) FROM stdin;
 \.
 
 
---
--- TOC entry 4916 (class 0 OID 0)
--- Dependencies: 217
--- Name: cadastro_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
+
 
 SELECT pg_catalog.setval('public.cadastro_id_seq', 4, true);
 
 
---
--- TOC entry 4917 (class 0 OID 0)
--- Dependencies: 219
--- Name: log_operacoes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
 
 SELECT pg_catalog.setval('public.log_operacoes_id_seq', 8, true);
 
 
---
--- TOC entry 4754 (class 2606 OID 16398)
--- Name: cadastro cadastro_campo_numerico_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
 
 ALTER TABLE ONLY public.cadastro
     ADD CONSTRAINT cadastro_campo_numerico_key UNIQUE (campo_numerico);
 
 
---
--- TOC entry 4756 (class 2606 OID 16396)
--- Name: cadastro cadastro_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
+
 
 ALTER TABLE ONLY public.cadastro
     ADD CONSTRAINT cadastro_pkey PRIMARY KEY (id);
 
 
---
--- TOC entry 4758 (class 2606 OID 16407)
--- Name: log_operacoes log_operacoes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
 
 ALTER TABLE ONLY public.log_operacoes
     ADD CONSTRAINT log_operacoes_pkey PRIMARY KEY (id);
 
 
---
--- TOC entry 4759 (class 2620 OID 16409)
--- Name: cadastro trigger_log_cadastro; Type: TRIGGER; Schema: public; Owner: postgres
---
 
 CREATE TRIGGER trigger_log_cadastro AFTER INSERT OR DELETE OR UPDATE ON public.cadastro FOR EACH ROW EXECUTE FUNCTION public.registrar_log();
 
 
--- Completed on 2025-08-19 21:54:48
-
---
--- PostgreSQL database dump complete
---
 
